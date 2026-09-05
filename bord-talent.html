@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bord Talent — Reclutamiento anónimo para maquiladoras</title>
+<meta name="description" content="Bord Talent es el mercado discreto de talento técnico para maquiladoras en Ciudad Juárez y El Paso. Perfiles anónimos, empresa actual bloqueada.">
+<style>
+  :root{
+    --canvas:#FFFFFF;
+    --soft:#F9F8F7;
+    --surface:#F0EFED;
+    --border:#E6E5E3;
+    --text:#2C2C2B;
+    --text2:#7D7A75;
+    --blue:#2783DE;
+    --blue-soft:#E5F2FC;
+    --green:#46A171;
+    --green-soft:#E8F1EC;
+    --r-sm:8px;
+    --r-lg:12px;
+    --sh-1:0 1px 2px rgba(0,0,0,.05);
+    --sh-2:0 4px 12px rgba(0,0,0,.04);
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--canvas);
+    color:var(--text);
+    font-family:var(--font);
+    font-size:16px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,p{margin:0}
+  ul{margin:0;padding:0;list-style:none}
+  :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+  /* ---------- Header ---------- */
+  .site-header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.78);
+    backdrop-filter:saturate(180%) blur(12px);
+    -webkit-backdrop-filter:saturate(180%) blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav{display:flex;align-items:center;gap:24px;height:64px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:650;letter-spacing:-.01em;font-size:17px}
+  .logo-mark{
+    width:28px;height:28px;border-radius:var(--r-sm);
+    background:var(--blue);color:#fff;
+    display:grid;place-items:center;font-size:13px;font-weight:700;
+    box-shadow:var(--sh-1);
+  }
+  .nav-links{display:flex;gap:8px;margin-left:auto}
+  .nav-links a{
+    padding:8px 12px;border-radius:var(--r-sm);
+    font-size:14.5px;color:var(--text2);
+  }
+  .nav-links a:hover{background:var(--soft);color:var(--text)}
+  .nav-cta{margin-left:8px}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    min-height:44px;padding:11px 18px;
+    border-radius:var(--r-sm);border:1px solid transparent;
+    font-size:15px;font-weight:550;font-family:inherit;
+    cursor:pointer;transition:background .15s ease,border-color .15s ease,transform .15s ease;
+  }
+  .btn-primary{background:var(--blue);color:#fff;box-shadow:var(--sh-1)}
+  .btn-primary:hover{background:#1f72c4}
+  .btn-ghost{background:var(--canvas);color:var(--text);border-color:var(--border);box-shadow:var(--sh-1)}
+  .btn-ghost:hover{background:var(--soft)}
+  .btn-sm{min-height:40px;padding:9px 14px;font-size:14.5px}
+
+  /* ---------- Badges & chips ---------- */
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:6px 12px;border-radius:999px;
+    background:var(--blue-soft);color:#1c5f9f;
+    font-size:13px;font-weight:550;
+  }
+  .badge-green{background:var(--green-soft);color:#2f7350}
+  .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+  .chip{
+    display:inline-block;padding:5px 10px;
+    border:1px solid var(--border);border-radius:999px;
+    background:var(--canvas);font-size:12.5px;color:var(--text2);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{padding:80px 0 88px}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+  .hero h1{
+    margin:20px 0 18px;
+    font-size:clamp(34px,4.4vw,52px);
+    line-height:1.12;letter-spacing:-.025em;font-weight:680;
+  }
+  .hero h1 em{font-style:normal;color:var(--blue)}
+  .hero p.lead{font-size:17.5px;color:var(--text2);max-width:52ch}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+  .metrics{display:flex;gap:40px;margin-top:40px;padding-top:28px;border-top:1px solid var(--border)}
+  .metric-n{font-size:26px;font-weight:680;letter-spacing:-.02em;display:block}
+  .metric-l{font-size:13.5px;color:var(--text2)}
+
+  /* ---------- Hero visual ---------- */
+  .stack{position:relative;padding:0 8px 88px 8px}
+  .card{
+    background:var(--canvas);border:1px solid var(--border);
+    border-radius:var(--r-lg);box-shadow:var(--sh-1),var(--sh-2);
+  }
+  .card-back{
+    position:absolute;top:-18px;right:14px;left:38px;height:56px;
+    background:var(--soft);border:1px solid var(--border);
+    border-radius:var(--r-lg);z-index:0;
+  }
+  .profile{position:relative;z-index:1;padding:24px}
+  .profile-top{display:flex;align-items:center;gap:14px}
+  .avatar{
+    width:46px;height:46px;border-radius:var(--r-sm);flex:none;
+    background:var(--surface);color:var(--text2);
+    display:grid;place-items:center;font-size:13px;font-weight:650;
+    border:1px solid var(--border);
+  }
+  .profile-role{font-size:16px;font-weight:620;letter-spacing:-.01em}
+  .profile-meta{font-size:13.5px;color:var(--text2)}
+  .profile-sep{height:1px;background:var(--border);margin:20px 0}
+  .field-label{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);font-weight:600}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .locked{
+    display:flex;align-items:center;gap:10px;justify-content:space-between;
+    margin-top:20px;padding:12px 14px;
+    background:var(--soft);border:1px solid var(--border);border-radius:var(--r-sm);
+  }
+  .locked-text{font-size:13.5px;color:var(--text2)}
+  .card-float{
+    position:absolute;left:-8px;bottom:0;z-index:2;
+    display:flex;align-items:center;gap:12px;
+    padding:14px 16px;max-width:290px;
+  }
+  .card-float .icon{
+    width:34px;height:34px;border-radius:var(--r-sm);flex:none;
+    background:var(--blue-soft);color:#1c5f9f;display:grid;place-items:center;font-size:15px;
+  }
+  .card-float strong{display:block;font-size:14px;font-weight:620}
+  .card-float span{font-size:12.5px;color:var(--text2)}
+
+  /* ---------- Section shells ---------- */
+  .band{background:var(--soft);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .section{padding:80px 0}
+  .sec-head{max-width:640px;margin-bottom:44px}
+  .sec-head h2{font-size:clamp(26px,3vw,34px);line-height:1.2;letter-spacing:-.02em;font-weight:660;margin:14px 0 12px}
+  .sec-head p{color:var(--text2);font-size:16.5px}
+
+  /* ---------- How it works ---------- */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .step{background:var(--canvas);border:1px solid var(--border);border-radius:var(--r-lg);padding:26px;box-shadow:var(--sh-1)}
+  .step-n{
+    width:32px;height:32px;border-radius:var(--r-sm);
+    background:var(--blue-soft);color:#1c5f9f;
+    display:grid;place-items:center;font-size:14px;font-weight:680;
+    margin-bottom:18px;
+  }
+  .step h3{font-size:17.5px;letter-spacing:-.01em;font-weight:620;margin-bottom:8px}
+  .step p{color:var(--text2);font-size:15px}
+  .step ul{margin-top:16px;display:grid;gap:8px}
+  .step li{font-size:14px;color:var(--text2);padding-left:18px;position:relative}
+  .step li::before{
+    content:"";position:absolute;left:0;top:8px;
+    width:7px;height:7px;border-radius:50%;background:var(--blue);
+  }
+
+  /* ---------- B2B ---------- */
+  .b2b{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--r-lg);padding:48px;
+    display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;
+  }
+  .b2b h2{font-size:clamp(25px,2.8vw,32px);line-height:1.2;letter-spacing:-.02em;font-weight:660;margin:14px 0 12px}
+  .b2b p{color:var(--text2);font-size:16.5px}
+  .b2b-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+  .b2b-list{display:grid;gap:12px}
+  .b2b-item{
+    background:var(--canvas);border:1px solid var(--border);border-radius:var(--r-sm);
+    padding:16px 18px;box-shadow:var(--sh-1);
+  }
+  .b2b-item strong{display:block;font-size:15px;font-weight:620;margin-bottom:2px}
+  .b2b-item span{font-size:13.5px;color:var(--text2)}
+
+  /* ---------- Footer ---------- */
+  .site-footer{border-top:1px solid var(--border);background:var(--canvas);padding:52px 0 36px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+  .foot-grid p{color:var(--text2);font-size:14.5px;margin-top:14px;max-width:34ch}
+  .foot-col h3{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);font-weight:600;margin-bottom:14px}
+  .foot-col li+li{margin-top:10px}
+  .foot-col a{font-size:14.5px;color:var(--text2)}
+  .foot-col a:hover{color:var(--text)}
+  .foot-bottom{
+    margin-top:40px;padding-top:22px;border-top:1px solid var(--border);
+    display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;
+    font-size:13.5px;color:var(--text2);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:900px){
+    .hero{padding:56px 0 64px}
+    .hero-grid{grid-template-columns:1fr;gap:56px}
+    .steps{grid-template-columns:1fr}
+    .b2b{grid-template-columns:1fr;gap:36px;padding:32px}
+    .foot-grid{grid-template-columns:1fr 1fr;gap:32px}
+    .nav-links{display:none}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 20px}
+    .section{padding:56px 0}
+    .hero p.lead{font-size:16.5px}
+    .hero-actions .btn{width:100%}
+    .metrics{gap:28px}
+    .stack{padding-bottom:104px}
+    .card-back{left:20px;right:8px}
+    .card-float{left:0;right:0;max-width:none}
+    .b2b{padding:26px}
+    .foot-grid{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <nav class="nav" aria-label="Navegación principal">
+      <a class="logo" href="#top" aria-label="Bord Talent, inicio">
+        <span class="logo-mark" aria-hidden="true">BT</span>
+        Bord Talent
+      </a>
+      <ul class="nav-links">
+        <li><a href="#como-funciona">Cómo funciona</a></li>
+        <li><a href="#privacidad">Privacidad</a></li>
+        <li><a href="#maquiladoras">Maquiladoras</a></li>
+      </ul>
+      <a class="btn btn-primary btn-sm nav-cta" href="#registro">Registrar perfil</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="badge"><span class="dot" aria-hidden="true"></span>Talento Anónimo · Maquiladoras Juárez / El Paso</span>
+        <h1>El mercado discreto donde los ingenieros <em>escuchan ofertas</em> sin exponer su empleo actual.</h1>
+        <p class="lead">Publica una ficha técnica verificada y sin nombre. Tu empresa actual queda bloqueada: solo las plantas que tú apruebas pueden contactarte para hablar de sueldo, turno y prestaciones.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#registro">Busco empleo anónimo</a>
+          <a class="btn btn-ghost" href="#maquiladoras">Acceso Maquiladoras</a>
+        </div>
+        <div class="metrics">
+          <div>
+            <span class="metric-n">+500</span>
+            <span class="metric-l">Perfiles verificados</span>
+          </div>
+          <div>
+            <span class="metric-n">100%</span>
+            <span class="metric-l">Confidencial</span>
+          </div>
+          <div>
+            <span class="metric-n">48 h</span>
+            <span class="metric-l">Primer contacto promedio</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stack" aria-label="Ejemplo de ficha técnica anónima">
+        <div class="card-back" aria-hidden="true"></div>
+
+        <article class="card profile">
+          <div class="profile-top">
+            <div class="avatar" aria-hidden="true">#4821</div>
+            <div>
+              <div class="profile-role">Ingeniero SMT Sr. · 8 años exp.</div>
+              <div class="profile-meta">Cd. Juárez · Turno mixto · Disponible en 30 días</div>
+            </div>
+          </div>
+
+          <div class="profile-sep" role="presentation"></div>
+
+          <p class="field-label">Software y certificaciones</p>
+          <div class="chips">
+            <span class="chip">Allen-Bradley</span>
+            <span class="chip">Six Sigma Black Belt</span>
+            <span class="chip">Visa B1/B2</span>
+            <span class="chip">IPC-A-610</span>
+            <span class="chip">Minitab</span>
+            <span class="chip">Inglés 90%</span>
+          </div>
+
+          <div class="locked">
+            <span class="locked-text">Empresa actual bloqueada</span>
+            <span class="badge badge-green"><span class="dot" aria-hidden="true"></span>Protegido</span>
+          </div>
+        </article>
+
+        <aside class="card card-float">
+          <span class="icon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3z"/><path d="M9 12l2.2 2.2L15.5 10"/></svg></span>
+          <div>
+            <strong>3 plantas solicitaron desbloqueo</strong>
+            <span>Tú decides quién ve tu nombre.</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO FUNCIONA -->
+  <section class="band" id="como-funciona">
+    <div class="wrap section">
+      <div class="sec-head">
+        <span class="badge">Cómo funciona</span>
+        <h2>Tres pasos entre tu perfil y una mejor oferta</h2>
+        <p>Diseñado para el ritmo de la industria maquiladora: rápido de llenar, imposible de rastrear por tu empleador.</p>
+      </div>
+
+      <div class="steps">
+        <article class="step">
+          <div class="step-n" aria-hidden="true">1</div>
+          <h3>Registro de ficha técnica</h3>
+          <p>Capturas puesto, años de experiencia, líneas, software y certificaciones. Nunca tu nombre ni tu correo corporativo.</p>
+          <ul>
+            <li>Formulario guiado de 6 minutos</li>
+            <li>Validación de certificaciones y visa</li>
+          </ul>
+        </article>
+
+        <article class="step" id="privacidad">
+          <div class="step-n" aria-hidden="true">2</div>
+          <h3>Capa de privacidad y bloqueo de empresa</h3>
+          <p>Agregas tu empleador actual y su corporativo a una lista negra. Esas cuentas jamás verán tu ficha en la bolsa de talento.</p>
+          <ul>
+            <li>Bloqueo por empresa, grupo y agencia</li>
+            <li>Datos de contacto cifrados</li>
+          </ul>
+        </article>
+
+        <article class="step">
+          <div class="step-n" aria-hidden="true">3</div>
+          <h3>Conexión directa y desbloqueo</h3>
+          <p>Las plantas envían propuesta con rango salarial y turno. Si te interesa, autorizas el desbloqueo y hablan contigo directo.</p>
+          <ul>
+            <li>Sin intermediarios ni reclutadores externos</li>
+            <li>Rango de sueldo visible desde el primer mensaje</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- B2B -->
+  <section class="section" id="maquiladoras">
+    <div class="wrap">
+      <div class="b2b">
+        <div>
+          <span class="badge">Para gerentes de planta y reclutamiento</span>
+          <h2>Acceso al talento pasivo que no está en las bolsas de trabajo</h2>
+          <p>Los mejores técnicos e ingenieros de Juárez y El Paso no aplican: escuchan. Filtra por línea, software, certificación y visa, y envía propuestas directas a fichas verificadas.</p>
+          <div class="b2b-actions">
+            <a class="btn btn-primary" href="#registro">Solicitar acceso corporativo</a>
+            <a class="btn btn-ghost" href="#registro">Ver demo de 10 min</a>
+          </div>
+        </div>
+        <div class="b2b-list">
+          <div class="b2b-item">
+            <strong>Búsqueda por competencia real</strong>
+            <span>SMT, inyección, calidad, automatización, cadena de suministro.</span>
+          </div>
+          <div class="b2b-item">
+            <strong>Fichas verificadas</strong>
+            <span>Experiencia, certificaciones y visa revisadas antes de publicarse.</span>
+          </div>
+          <div class="b2b-item">
+            <strong>Cero fuga de información</strong>
+            <span>Los candidatos deciden el desbloqueo; tu vacante se mantiene discreta.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="registro">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="logo" href="#top">
+          <span class="logo-mark" aria-hidden="true">BT</span>
+          Bord Talent
+        </a>
+        <p>Reclutamiento anónimo para la industria maquiladora de la frontera Juárez / El Paso.</p>
+      </div>
+      <div class="foot-col">
+        <h3>Plataforma</h3>
+        <ul>
+          <li><a href="#como-funciona">Cómo funciona</a></li>
+          <li><a href="#privacidad">Capa de privacidad</a></li>
+          <li><a href="#maquiladoras">Acceso maquiladoras</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h3>Legal y contacto</h3>
+        <ul>
+          <li><a href="#">Aviso de privacidad</a></li>
+          <li><a href="#">Términos y condiciones</a></li>
+          <li><a href="mailto:hola@bordtalent.mx">hola@bordtalent.mx</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Bord Talent. Todos los derechos reservados.</span>
+      <span>Ciudad Juárez, Chihuahua, México</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
